@@ -1,0 +1,97 @@
+import React from 'react';
+import ReactPaginate from 'react-paginate';
+
+import handleResponse from '../handleResponse';
+import authHeader from '../authHeader';
+import addToCart from '../cart/addToCart';
+
+class Books extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            books: [],
+            totalPages: 1
+        };
+
+        this.loadAllBooks = this.loadAllBooks.bind(this);
+        this.addToCart = this.addToCart.bind(this);
+        this.pageChanged = this.pageChanged.bind(this);
+    }
+
+    componentDidMount() {
+        this.loadAllBooks(0, process.env.REACT_APP_DEFAULT_PAGE_SIZE);
+    }
+
+    loadAllBooks(pageNumber, size) {
+      const requestOptions = {
+          method: 'GET',
+          headers: authHeader()
+      };
+        fetch(`${process.env.REACT_APP_API_URL}/books?page=${pageNumber}&size=${size}`, requestOptions)
+            .then(handleResponse)
+            .then(response => {
+                this.setState({
+                    books: response._embedded.books,
+                    totalPages: response.page.totalPages
+                });
+            });
+    }
+
+    addToCart(book) {
+        console.log(book.count);
+        if (book.count > 0) {
+            book.count -= 1;
+            addToCart(book);
+        }
+    }
+
+    pageChanged(data) {
+        this.loadAllBooks(data.selected, process.env.REACT_APP_DEFAULT_PAGE_SIZE);
+    }
+
+    render() {
+        const books = this.state.books;
+        return (
+            <div>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Photo</th>
+                            <th>Price</th>
+                            <th>Add to cart</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {books.map(book =>
+                     <tr key={book.id}>
+                                <td>{book.name}</td>
+                                <td>
+                                    <img src={book.photoLink} width="100"/>
+                                </td>
+                                <td>{book.price}</td>
+                                <td><a disabled={book.count <= 0} onClick={() => this.addToCart(book)} className="btn btn-info">+</a></td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+                <ReactPaginate
+                  previousLabel={'previous'}
+                  nextLabel={'next'}
+                  breakLabel={'...'}
+                  breakClassName={'break-me'}
+                  pageCount={this.state.totalPages}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={this.pageChanged}
+                  containerClassName={'pagination'}
+                  subContainerClassName={'pages pagination'}
+                  activeClassName={'active'}
+                />
+            </div>
+        );
+    }
+}
+
+export default Books;
