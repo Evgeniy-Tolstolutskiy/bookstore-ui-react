@@ -10,6 +10,7 @@ import Login from './login/Login';
 import Orders from './orders/Orders';
 import Profile from './profile/Profile';
 import decode from 'jwt-decode';
+import Book from "./book/Book";
 
 class App extends React.Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class App extends React.Component {
                               <PrivateRoute path="/cart" component={Cart} />
                               <PrivateRoute path="/orders" component={Orders} />
                               <PrivateRoute path="/profile" component={Profile} />
-                              <PrivateRoute path="/book/:id" component={Profile} />
+                              <PrivateRoute path="/book/:id" component={Book} />
                               <Route path="/registration" component={Profile} />
                               <Route path="/login" render={(props) => <Login callbackFunction={this.initCurrentUserAndToken} {...props} />} />
                           </div>

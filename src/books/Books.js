@@ -4,6 +4,10 @@ import ReactPaginate from 'react-paginate';
 import handleResponse from '../handleResponse';
 import authHeader from '../authHeader';
 import addToCart from '../cart/addToCart';
+import removeBook from "../book/removeBook";
+import {Link} from "react-router-dom";
+import authenticationService from "../authenticationService";
+import decode from 'jwt-decode';
 
 class Books extends React.Component {
     constructor(props) {
@@ -14,6 +18,7 @@ class Books extends React.Component {
             totalPages: 1
         };
 
+        this.tokenPayload = decode(authenticationService.currentUserValue.access_token);
         this.loadAllBooks = this.loadAllBooks.bind(this);
         this.addToCart = this.addToCart.bind(this);
         this.pageChanged = this.pageChanged.bind(this);
@@ -24,10 +29,10 @@ class Books extends React.Component {
     }
 
     loadAllBooks(pageNumber, size) {
-      const requestOptions = {
-          method: 'GET',
-          headers: authHeader()
-      };
+        const requestOptions = {
+            method: 'GET',
+            headers: authHeader()
+        };
         fetch(`${process.env.REACT_APP_API_URL}/books?page=${pageNumber}&size=${size}`, requestOptions)
             .then(handleResponse)
             .then(response => {
@@ -54,6 +59,7 @@ class Books extends React.Component {
         const books = this.state.books;
         return (
             <div>
+                <Link to="/book">Add new book</Link>
                 <table className="table">
                     <thead>
                         <tr>
@@ -72,6 +78,8 @@ class Books extends React.Component {
                                 </td>
                                 <td>{book.price}</td>
                                 <td><a disabled={book.count <= 0} onClick={() => this.addToCart(book)} className="btn btn-info">+</a></td>
+                                {/*{this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td><Link to="/book">Edit</Link></td>}*/}
+                                {/*{this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td><a onClick={removeBook(book.id)}>X</a></td>}*/}
                             </tr>
                         )}
                     </tbody>

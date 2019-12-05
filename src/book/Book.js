@@ -17,11 +17,14 @@ class Book extends React.Component {
             visible: true,
             success: '',
             failure: '',
+            photoSuccess: '',
+            photoFailure: '',
             formErrors: { name: '', price: '', photo: '', count: '' },
             formValid: false,
             submitted: false
         };
 
+        this.fileInput = React.createRef();
         this.loadBook = this.loadBook.bind(this);
         this.validateField = this.validateField.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -29,8 +32,8 @@ class Book extends React.Component {
     }
 
     componentDidMount() {
-        if (authenticationService.currentUserValue) {
-            this.loadBook(useParams().id);
+        if (this.props.match.params.id) {
+            this.loadBook(this.props.match.params.id);
         }
     }
 
@@ -72,9 +75,6 @@ class Book extends React.Component {
                 } else {
                     fieldValidationErrors.price = '';
                 }
-                break;
-            case 'photo':
-                fieldValidationErrors.photo = value !== '' ? '' : 'Photo is required';
                 break;
             case 'count':
                 if (value < 0) {
@@ -124,7 +124,6 @@ class Book extends React.Component {
                     this.setState({
                         name: '',
                         price: '',
-                        photo: '',
                         count: '',
                         visible: true,
                         formErrors: { name: '', price: '', photo: '', count: '' },
@@ -133,6 +132,22 @@ class Book extends React.Component {
                         success: 'Book successfully added',
                         failure: ''
                     });
+                }
+                if (this.fileInput.current.files[0]) {
+                    headers['Content-Type'] = 'miltipart/form-data';
+                    const fileRequestOptions = {
+                        method: 'POST',
+                        headers: headers,
+                        body: {'file': this.fileInput.current.files[0]}
+                    };
+                    fetch(`${process.env.REACT_APP_API_URL}/books/${this.state.id}/image`, fileRequestOptions)
+                        .then(handleResponse)
+                        .then(() => {
+                            this.setState({
+                                photoSuccess: 'Photo successfully uploaded',
+                                failure: ''
+                            });
+                        });
                 }
             }).catch(errors => {
             this.setState({
@@ -157,28 +172,25 @@ class Book extends React.Component {
                         <input type="text" name="price" className="form-control" value={this.state.price} onChange={this.onChange} />
                         { this.state.submitted && <div className="text-danger">{this.state.formErrors.price}</div> }
                     </div>
+                    { this.state.photo && <div className="form-group">
+                        <label htmlFor="photo">Current photo</label>
+                        <img name="photo" src={this.state.photo} alt=""/>
+                    </div> }
                     <div className="form-group">
-                        <label htmlFor="photo">Photo</label>
-                        <input type="file" name="confirmPassword" className="form-control" value={this.state.photo} onChange={this.onChange} />
-                        { this.state.submitted && <div className="text-danger">{this.state.formErrors.photo}</div> }
+                        <label htmlFor="newPhoto">New photo</label>
+                        <input name="newPhoto" ref={this.fileInput} type="file"/>
+                        <div className="text-success">{this.state.photoSuccess}</div>
+                        <div className="text-danger">{this.state.photoFailure}</div>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input type="text" name="email" className="form-control" value={this.state.email} onChange={this.onChange} />
-                        { this.state.submitted && <div className="text-danger">{this.state.formErrors.email}</div> }
+                        <label htmlFor="count">Count</label>
+                        <input type="number" name="count" className="form-control" value={this.state.count} onChange={this.onChange} />
+                        { this.state.submitted && <div className="text-danger">{this.state.formErrors.count}</div> }
                     </div>
                     <div className="form-group">
-                        <label htmlFor="birthday">Birthday</label>
-                        <input type="date" name="birthday" className="form-control" value={this.state.birthday} onChange={this.onChange} />
-                        { this.state.submitted && <div className="text-danger">{this.state.formErrors.birthday}</div> }
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="gender">Gender</label>
-                        <select name="gender" className="form-control" value={this.state.gender} onChange={this.onChange} >
-                            <option value="M">M</option>
-                            <option value="F">F</option>
-                        </select>
-                        { this.state.submitted && <div className="text-danger">{this.state.formErrors.gender}</div> }
+                        <label htmlFor="visible">Visible</label>
+                        <input type="checkbox" name="visible" className="form-control" value={this.state.visible} onChange={this.onChange} />
+                        { this.state.submitted && <div className="text-danger">{this.state.formErrors.visible}</div> }
                     </div>
                     <div className="form-group">
                         <input type="submit" value="Update" className="btn btn-primary" />
