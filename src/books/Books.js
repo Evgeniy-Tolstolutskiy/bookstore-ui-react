@@ -5,7 +5,7 @@ import handleResponse from '../handleResponse';
 import authHeader from '../authHeader';
 import addToCart from '../cart/addToCart';
 import removeBook from "../book/removeBook";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import authenticationService from "../authenticationService";
 import decode from 'jwt-decode';
 
@@ -15,7 +15,8 @@ class Books extends React.Component {
 
         this.state = {
             books: [],
-            totalPages: 1
+            totalPages: 1,
+            currentPage: 0
         };
 
         this.tokenPayload = decode(authenticationService.currentUserValue.access_token);
@@ -33,12 +34,13 @@ class Books extends React.Component {
             method: 'GET',
             headers: authHeader()
         };
-        fetch(`${process.env.REACT_APP_API_URL}/books?page=${pageNumber}&size=${size}`, requestOptions)
+        fetch(`${process.env.REACT_APP_API_URL}/books?page=${pageNumber}&size=${size}&sort=id`, requestOptions)
             .then(handleResponse)
             .then(response => {
                 this.setState({
                     books: response._embedded.books,
-                    totalPages: response.page.totalPages
+                    totalPages: response.page.totalPages,
+                    currentPage: pageNumber
                 });
             });
     }
@@ -59,13 +61,14 @@ class Books extends React.Component {
         const books = this.state.books;
         return (
             <div>
-                <Link to="/book">Add new book</Link>
+                {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <Link to="/book">Add new book</Link>}
                 <table className="table">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Photo</th>
                             <th>Price</th>
+                            {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <th>Visible</th>}
                             <th>Add to cart</th>
                         </tr>
                     </thead>
@@ -77,9 +80,14 @@ class Books extends React.Component {
                                     <img src={book.photoLink} width="100"/>
                                 </td>
                                 <td>{book.price}</td>
+                                {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td>{book.visible ? 'Visible' : 'Not visible'}</td>}
                                 <td><a disabled={book.count <= 0} onClick={() => this.addToCart(book)} className="btn btn-info">+</a></td>
-                                {/*{this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td><Link to="/book">Edit</Link></td>}*/}
-                                {/*{this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td><a onClick={removeBook(book.id)}>X</a></td>}*/}
+                                {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td><Link key={book.id} to={`/book/${book.id}`}>Edit</Link></td>}
+                                {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' &&
+                                    <td><a onClick={() => {
+                                        removeBook(book.id).then(() => this.setState({books: this.state.books.filter((b) => book.id !== b.id)}))
+                                    }}>X</a></td>
+                                }
                             </tr>
                         )}
                     </tbody>

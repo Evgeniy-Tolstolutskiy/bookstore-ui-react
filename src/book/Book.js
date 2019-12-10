@@ -1,5 +1,4 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 
 import authenticationService from '../authenticationService';
 import handleResponse from '../handleResponse';
@@ -12,7 +11,7 @@ class Book extends React.Component {
         this.state = {
             name: '',
             price: '',
-            photo: '',
+            photoLink: '',
             count: '',
             visible: true,
             success: '',
@@ -29,9 +28,7 @@ class Book extends React.Component {
         this.validateField = this.validateField.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-    }
 
-    componentDidMount() {
         if (this.props.match.params.id) {
             this.loadBook(this.props.match.params.id);
         }
@@ -49,7 +46,7 @@ class Book extends React.Component {
                     id: response.id,
                     name: response.name,
                     price: response.price,
-                    photo: response.photoLink,
+                    photoLink: response.photoLink,
                     count: response.count,
                     visible: response.visible
                 });
@@ -57,8 +54,9 @@ class Book extends React.Component {
     }
 
     onChange(event) {
-        this.setState({[event.target.name]: event.target.value});
-        this.validateField(event.target.name, event.target.value);
+        const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+        this.setState({[event.target.name]: value});
+        this.validateField(event.target.name, value);
     }
 
     validateField(fieldName, value) {
@@ -94,8 +92,10 @@ class Book extends React.Component {
     }
 
     onSubmit(event) {
+        event.preventDefault();
         this.setState({
             success: '',
+            failure: '',
             submitted: true
         });
 
@@ -112,9 +112,9 @@ class Book extends React.Component {
             headers: headers,
             body: JSON.stringify(this.state)
         };
-        fetch(`${process.env.REACT_APP_API_URL}/books/save`, requestOptions)
+        fetch(`${process.env.REACT_APP_API_URL}/books`, requestOptions)
             .then(handleResponse)
-            .then(() => {
+            .then((response) => {
                 if (this.state.id) {
                     this.setState({
                         success: 'Book successfully updated',
@@ -122,40 +122,36 @@ class Book extends React.Component {
                     });
                 } else {
                     this.setState({
-                        name: '',
-                        price: '',
-                        count: '',
-                        visible: true,
-                        formErrors: { name: '', price: '', photo: '', count: '' },
-                        formValid: false,
-                        submitted: false,
+                        id: response.id,
                         success: 'Book successfully added',
                         failure: ''
                     });
                 }
                 if (this.fileInput.current.files[0]) {
-                    headers['Content-Type'] = 'miltipart/form-data';
+                    delete headers['Content-Type'];
+                    let formData = new FormData();
+                    formData.append('file', this.fileInput.current.files[0]);
                     const fileRequestOptions = {
                         method: 'POST',
                         headers: headers,
-                        body: {'file': this.fileInput.current.files[0]}
+                        body: formData
                     };
                     fetch(`${process.env.REACT_APP_API_URL}/books/${this.state.id}/image`, fileRequestOptions)
                         .then(handleResponse)
-                        .then(() => {
+                        .then((photoLink) => {
                             this.setState({
                                 photoSuccess: 'Photo successfully uploaded',
-                                failure: ''
+                                failure: '',
+                                photoLink: photoLink
                             });
                         });
                 }
             }).catch(errors => {
-            this.setState({
-                failure: errors[0].code,
-                success: ''
+                this.setState({
+                    failure: errors[0].code,
+                    success: ''
+                });
             });
-        });
-        event.preventDefault();
     }
 
     render() {
@@ -172,13 +168,13 @@ class Book extends React.Component {
                         <input type="text" name="price" className="form-control" value={this.state.price} onChange={this.onChange} />
                         { this.state.submitted && <div className="text-danger">{this.state.formErrors.price}</div> }
                     </div>
-                    { this.state.photo && <div className="form-group">
-                        <label htmlFor="photo">Current photo</label>
-                        <img name="photo" src={this.state.photo} alt=""/>
+                    { this.state.photoLink && <div className="form-group">
+                        <label htmlFor="photoLink">Current photo</label>
+                        <img name="photoLink" src={this.state.photoLink} alt="book image"/>
                     </div> }
                     <div className="form-group">
                         <label htmlFor="newPhoto">New photo</label>
-                        <input name="newPhoto" ref={this.fileInput} type="file"/>
+                        <input name="newPhoto" ref={this.fileInput} type="file" onChange={this.onChange} />
                         <div className="text-success">{this.state.photoSuccess}</div>
                         <div className="text-danger">{this.state.photoFailure}</div>
                     </div>
@@ -189,13 +185,14 @@ class Book extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="visible">Visible</label>
-                        <input type="checkbox" name="visible" className="form-control" value={this.state.visible} onChange={this.onChange} />
+                        <input type="checkbox" name="visible" className="form-control" checked={this.state.visible} onChange={this.onChange} />
                         { this.state.submitted && <div className="text-danger">{this.state.formErrors.visible}</div> }
                     </div>
                     <div className="form-group">
-                        <input type="submit" value="Update" className="btn btn-primary" />
+                        <input type="submit" value={this.state.id ? 'Update' : 'Add'} className="btn btn-primary" />
                     </div>
                     <div className="text-success">{this.state.success}</div>
+                    <div className="text-success">{this.state.photoSuccess}</div>
                     <div className="text-danger">{this.state.failure}</div>
                 </form>
             </div>

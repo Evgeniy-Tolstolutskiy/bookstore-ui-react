@@ -105,8 +105,10 @@ class Profile extends React.Component {
     }
 
     onSubmit(event) {
+        event.preventDefault();
         this.setState({
             success: '',
+            failure: '',
             submitted: true
         });
 
@@ -162,7 +164,6 @@ class Profile extends React.Component {
                     });
                 });
         }
-        event.preventDefault();
     }
 
     render() {
