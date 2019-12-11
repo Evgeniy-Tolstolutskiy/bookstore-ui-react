@@ -1,10 +1,10 @@
 export function addToCart(book) {
     const copiedBook = { ...book };
-    var books = JSON.parse(localStorage.getItem('cart'));
+    let books = JSON.parse(localStorage.getItem('cart'));
     if (books === null) {
         books = [];
     }
-    for (var i = 0; i < books.length; i++) {
+    for (let i = 0; i < books.length; i++) {
         if (books[i].id === book.id) {
             books[i].count += 1;
             localStorage.setItem("cart", JSON.stringify(books));

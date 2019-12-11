@@ -46,7 +46,6 @@ class Books extends React.Component {
     }
 
     addToCart(book) {
-        console.log(book.count);
         if (book.count > 0) {
             book.count -= 1;
             addToCart(book);

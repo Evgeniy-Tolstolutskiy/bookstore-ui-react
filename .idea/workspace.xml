@@ -5,9 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/book/Book.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/book/Book.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/book/removeBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/book/removeBook.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/books/Books.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/books/Books.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/profile/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cart/addToCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/cart/addToCart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/users/Users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/Users.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +68,8 @@
       <workItem from="1575458068016" duration="1191000" />
       <workItem from="1575481820701" duration="7035000" />
       <workItem from="1575912436028" duration="11626000" />
-      <workItem from="1576003427497" duration="5676000" />
+      <workItem from="1576003427497" duration="7679000" />
+      <workItem from="1576087723597" duration="3218000" />
     </task>
     <servers />
   </component>

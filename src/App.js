@@ -9,8 +9,9 @@ import Cart from './cart/Cart';
 import Login from './login/Login';
 import Orders from './orders/Orders';
 import Profile from './profile/Profile';
+import Book from './book/Book';
+import Users from './users/Users';
 import decode from 'jwt-decode';
-import Book from "./book/Book";
 
 class App extends React.Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class App extends React.Component {
                               <Link to="/" className="nav-item nav-link">Home</Link>
                               {tokenPayload.authorities[0] === 'ROLE_USER' && <Link to="/cart" className="nav-item nav-link">Cart</Link>}
                               {tokenPayload.authorities[0] === 'ROLE_USER' && <Link to="/orders" className="nav-item nav-link">Orders</Link>}
+                              {tokenPayload.authorities[0] === 'ROLE_ADMIN' && <Link to="/users" className="nav-item nav-link">Users</Link>}
                               <Link to="/profile" className="nav-item nav-link">Profile</Link>
                               <a onClick={this.logout} className="nav-item nav-link">Logout</a>
                           </div>
@@ -65,6 +67,7 @@ class App extends React.Component {
                               <PrivateRoute path="/cart" component={Cart} />
                               <PrivateRoute path="/orders" component={Orders} />
                               <PrivateRoute path="/profile" component={Profile} />
+                              <PrivateRoute path="/users" component={Users} />
                               <PrivateRoute path="/book/:id?" component={Book} />
                               <Route path="/registration" component={Profile} />
                               <Route path="/login" render={(props) => <Login callbackFunction={this.initCurrentUserAndToken} {...props} />} />

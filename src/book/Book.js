@@ -138,11 +138,16 @@ class Book extends React.Component {
                     };
                     fetch(`${process.env.REACT_APP_API_URL}/books/${this.state.id}/image`, fileRequestOptions)
                         .then(handleResponse)
-                        .then((photoLink) => {
+                        .then(response => {
                             this.setState({
                                 photoSuccess: 'Photo successfully uploaded',
-                                failure: '',
-                                photoLink: photoLink
+                                photoFailure: '',
+                                photoLink: response.photo
+                            });
+                        }).catch(errors => {
+                            this.setState({
+                                photoSuccess: '',
+                                photoFailure: errors,
                             });
                         });
                 }
@@ -192,7 +197,6 @@ class Book extends React.Component {
                         <input type="submit" value={this.state.id ? 'Update' : 'Add'} className="btn btn-primary" />
                     </div>
                     <div className="text-success">{this.state.success}</div>
-                    <div className="text-success">{this.state.photoSuccess}</div>
                     <div className="text-danger">{this.state.failure}</div>
                 </form>
             </div>
