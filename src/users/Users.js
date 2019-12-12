@@ -3,6 +3,7 @@ import ReactPaginate from 'react-paginate';
 
 import handleResponse from '../handleResponse';
 import authHeader from '../authHeader';
+import removeUser from './removeUser';
 
 class Users extends React.Component {
     constructor(props) {
@@ -16,7 +17,6 @@ class Users extends React.Component {
 
         this.loadAllUsers = this.loadAllUsers.bind(this);
         this.pageChanged = this.pageChanged.bind(this);
-        this.removeUser = this.removeUser.bind(this);
     }
 
     componentDidMount() {
@@ -43,15 +43,6 @@ class Users extends React.Component {
         this.loadAllUsers(data.selected, process.env.REACT_APP_DEFAULT_PAGE_SIZE);
     }
 
-    removeUser(id) {
-        const requestOptions = {
-            method: 'DELETE',
-            headers: authHeader()
-        };
-        fetch(`${process.env.REACT_APP_API_URL}/usersRepository/${id}`, requestOptions)
-        .then(() => this.setState({books: this.state.users.filter((u) => id !== u.id)}));
-    }
-
     render() {
         const users = this.state.users;
         return (
@@ -70,7 +61,12 @@ class Users extends React.Component {
                             <td>{user.name}</td>
                             <td>{user.gender}</td>
                             <td>{user.email}</td>
-                            <td><a onClick={() => this.removeUser(user.id)}>X</a></td>
+                            <td><a onClick={
+                                () => removeUser(user.id)
+                                    .then(() => this.setState({
+                                        books: this.state.users.filter((u) => user.id !== u.id)
+                                    }))
+                            }>X</a></td>
                         </tr>
                     )}
                     </tbody>

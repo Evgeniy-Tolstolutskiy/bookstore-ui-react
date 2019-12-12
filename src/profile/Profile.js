@@ -4,6 +4,9 @@ import moment from 'moment';
 import authenticationService from '../authenticationService';
 import handleResponse from '../handleResponse';
 import authHeader from '../authHeader';
+import removeUser from "../users/removeUser";
+import history from "../history";
+import Modal from "react-bootstrap/Modal";
 
 class Profile extends React.Component {
     constructor(props) {
@@ -20,7 +23,8 @@ class Profile extends React.Component {
             failure: '',
             formErrors: { username: '', password: '', confirmPassword: '', email: '', birthday: '', gender: '' },
             formValid: false,
-            submitted: false
+            submitted: false,
+            isModalOpened: false
         };
 
         this.loadUser = this.loadUser.bind(this);
@@ -44,6 +48,7 @@ class Profile extends React.Component {
             .then(handleResponse)
             .then(response => {
                 this.setState({
+                    id: response.id,
                     username: response.username,
                     password: '',
                     confirmPassword: '',
@@ -169,6 +174,7 @@ class Profile extends React.Component {
     render() {
         return (
             <div>
+
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
@@ -203,8 +209,23 @@ class Profile extends React.Component {
                         </select>
                         { this.state.submitted && <div className="text-danger">{this.state.formErrors.gender}</div> }
                     </div>
-                    <div className="form-group">
+                    <div className="btn-toolbar">
                         <input type="submit" value="Update" className="btn btn-primary" />
+                        { this.state.id && <input type="button" value="Delete" className="btn btn-danger" onClick={ () => {this.setState({isModalOpened: true})} } /> }
+                        <Modal.Dialog show={this.state.isModalOpened}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Modal title</Modal.Title>
+                            </Modal.Header>
+
+                            <Modal.Body>
+                                <p>Modal body text goes here.</p>
+                            </Modal.Body>
+
+                            <Modal.Footer>
+                                <button type="button" className="btn btn-primary">Delete</button>
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={ () => {this.setState({isModalOpened: false})} }>Close</button>
+                            </Modal.Footer>
+                        </Modal.Dialog>
                     </div>
                     <div className="text-success">{this.state.success}</div>
                     <div className="text-danger">{this.state.failure}</div>
