@@ -22,9 +22,10 @@ class Cart extends React.Component {
 
     loadCart() {
         let books = JSON.parse(localStorage.getItem('cart'));
-        var booksTemp = [];
-        var totalTemp = 0;
-        for (var i = 0; i < books.length; i++) {
+        books = books ? books : [];
+        let booksTemp = [];
+        let totalTemp = 0;
+        for (let i = 0; i < books.length; i++) {
             booksTemp.push(books[i]);
             totalTemp += books[i].price * books[i].count;
         }
@@ -35,8 +36,8 @@ class Cart extends React.Component {
     }
 
     remove(id) {
-        var books = JSON.parse(localStorage.getItem('cart'));
-        for (var i = 0; i < books.length; i++) {
+        let books = JSON.parse(localStorage.getItem('cart'));
+        for (let i = 0; i < books.length; i++) {
             if (books[i].id === id) {
                 books.splice(i, 1);
                 break;
@@ -47,8 +48,12 @@ class Cart extends React.Component {
     }
 
     makeOrder() {
-        var orderItems = [];
-        for (var i = 0; i < this.state.books.length; i++) {
+        if (this.state.books.length === 0) {
+            return;
+        }
+
+        let orderItems = [];
+        for (let i = 0; i < this.state.books.length; i++) {
             orderItems.push({
                 book: this.state.books[i],
                 count: this.state.books[i].count

@@ -4,9 +4,20 @@ import moment from 'moment';
 import authenticationService from '../authenticationService';
 import handleResponse from '../handleResponse';
 import authHeader from '../authHeader';
-import removeUser from "../users/removeUser";
-import history from "../history";
-import Modal from "react-bootstrap/Modal";
+import Modal from "react-modal";
+import {logout} from "../logout";
+
+const customStyles = {
+    content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-50%',
+        transform             : 'translate(-50%, -50%)'
+    }
+};
+Modal.setAppElement('#root')
 
 class Profile extends React.Component {
     constructor(props) {
@@ -27,6 +38,7 @@ class Profile extends React.Component {
             isModalOpened: false
         };
 
+        this.removeCurrentUser = this.removeCurrentUser.bind(this);
         this.loadUser = this.loadUser.bind(this);
         this.validateField = this.validateField.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -171,10 +183,19 @@ class Profile extends React.Component {
         }
     }
 
+    removeCurrentUser() {
+        const requestOptions = {
+            method: 'DELETE',
+            headers: authHeader()
+        };
+        fetch(`${process.env.REACT_APP_API_URL}/users/me`, requestOptions)
+            .then(handleResponse)
+            .then(() => logout(this.props.context));
+    }
+
     render() {
         return (
             <div>
-
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
@@ -212,20 +233,22 @@ class Profile extends React.Component {
                     <div className="btn-toolbar">
                         <input type="submit" value="Update" className="btn btn-primary" />
                         { this.state.id && <input type="button" value="Delete" className="btn btn-danger" onClick={ () => {this.setState({isModalOpened: true})} } /> }
-                        <Modal.Dialog show={this.state.isModalOpened}>
-                            <Modal.Header closeButton>
-                                <Modal.Title>Modal title</Modal.Title>
-                            </Modal.Header>
-
-                            <Modal.Body>
-                                <p>Modal body text goes here.</p>
-                            </Modal.Body>
-
-                            <Modal.Footer>
-                                <button type="button" className="btn btn-primary">Delete</button>
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={ () => {this.setState({isModalOpened: false})} }>Close</button>
-                            </Modal.Footer>
-                        </Modal.Dialog>
+                        <Modal
+                            isOpen={this.state.isModalOpened}
+                            contentLabel="Confirm delete"
+                            style={customStyles}
+                        >
+                            <h2>Confirm delete</h2>
+                            <div>Please confirm that you really want to delete account</div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-primary" onClick={this.removeCurrentUser}>Delete</button>
+                                <button onClick={
+                                    () => {
+                                        this.setState({isModalOpened: false})
+                                    }
+                                } type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </Modal>
                     </div>
                     <div className="text-success">{this.state.success}</div>
                     <div className="text-danger">{this.state.failure}</div>

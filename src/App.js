@@ -12,6 +12,7 @@ import Profile from './profile/Profile';
 import Book from './book/Book';
 import Users from './users/Users';
 import decode from 'jwt-decode';
+import {logout} from "./logout";
 
 class App extends React.Component {
   constructor(props) {
@@ -22,7 +23,6 @@ class App extends React.Component {
           tokenPayload: ''
       };
 
-      this.logout = this.logout.bind(this);
       this.initCurrentUserAndToken = this.initCurrentUserAndToken.bind(this);
   }
 
@@ -31,16 +31,7 @@ class App extends React.Component {
   }
 
   initCurrentUserAndToken() {
-      authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x, tokenPayload: decode(x.access_token) }));
-  }
-
-  logout() {
-      authenticationService.logout();
-      history.push('/login');
-      this.setState({
-          currentUser: null,
-          tokenPayload: ''
-      });
+      authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x, tokenPayload: x ? decode(x.access_token) : '' }));
   }
 
   render() {
@@ -56,7 +47,7 @@ class App extends React.Component {
                               {tokenPayload.authorities[0] === 'ROLE_USER' && <Link to="/orders" className="nav-item nav-link">Orders</Link>}
                               {tokenPayload.authorities[0] === 'ROLE_ADMIN' && <Link to="/users" className="nav-item nav-link">Users</Link>}
                               <Link to="/profile" className="nav-item nav-link">Profile</Link>
-                              <a onClick={this.logout} className="nav-item nav-link">Logout</a>
+                              <a onClick={ () => { logout(this) }} className="nav-item nav-link">Logout</a>
                           </div>
                       </nav>
                   }
@@ -66,7 +57,7 @@ class App extends React.Component {
                               <PrivateRoute exact path="/" component={Books} />
                               <PrivateRoute path="/cart" component={Cart} />
                               <PrivateRoute path="/orders" component={Orders} />
-                              <PrivateRoute path="/profile" component={Profile} />
+                              <PrivateRoute path="/profile" component={Profile} context={this}/>
                               <PrivateRoute path="/users" component={Users} />
                               <PrivateRoute path="/book/:id?" component={Book} />
                               <Route path="/registration" component={Profile} />
