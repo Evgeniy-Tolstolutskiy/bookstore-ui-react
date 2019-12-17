@@ -1,18 +1,18 @@
 export function addToCart(book) {
-    const copiedBook = { ...book };
-    let books = JSON.parse(localStorage.getItem('cart'));
-    if (books === null) {
-        books = [];
+    let books = {};
+    try {
+        books = JSON.parse(localStorage.getItem('cart'));
+    } catch (error) {
+        console.debug('Cart is not initialized');
     }
-    for (let i = 0; i < books.length; i++) {
-        if (books[i].id === book.id) {
-            books[i].count += 1;
-            localStorage.setItem("cart", JSON.stringify(books));
-            return;
-        }
+    const id = book.id;
+    if (!books[id]) {
+        const copiedBook = { ...book };
+        copiedBook.count = 1;
+        books[id] = copiedBook;
+    } else {
+        books[id].count += 1;
     }
-    copiedBook.count = 1;
-    books.push(copiedBook);
     localStorage.setItem("cart", JSON.stringify(books));
 }
 

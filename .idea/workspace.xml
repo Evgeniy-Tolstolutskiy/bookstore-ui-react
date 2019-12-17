@@ -5,11 +5,14 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PrivateRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/PrivateRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/books/Books.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/books/Books.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cart/Cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/cart/Cart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cart/addToCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/cart/addToCart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handleResponse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handleResponse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/login/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/orders/Orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/orders/Orders.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/profile/Profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/users/Users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/Users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/users/removeUser.js" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +81,9 @@
       <workItem from="1576087723597" duration="3276000" />
       <workItem from="1576138876119" duration="29000" />
       <workItem from="1576176551928" duration="5840000" />
-      <workItem from="1576261530304" duration="6142000" />
+      <workItem from="1576261530304" duration="6853000" />
+      <workItem from="1576522255102" duration="14666000" />
+      <workItem from="1576609722395" duration="6281000" />
     </task>
     <servers />
   </component>

@@ -44,20 +44,34 @@ class Orders extends React.Component {
         const orders = this.state.orders;
         return (
             <div>
-                <ul className="list-group">
-                    {orders.map(order =>
-                    <li className="list-group-item" key={order.id}>
-                        Id: {order.id}, Price: {order.price}, Date: {order.date}
-                        <ul className="list-group">
-                            {order.bookOrders.map(bookOrder =>
-                            <li className="list-group-item" key={bookOrder.id}>
-                                Name: {bookOrder.book.name}, Image: <img src={bookOrder.book.photoLink} width="100"/>, Price: {bookOrder.book.price}, Count: {bookOrder.count}
-                            </li>
-                            )}
-                        </ul>
-                    </li>
-                    )}
-                </ul>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th>Books</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {orders.map(order =>
+                        <tr key={order.id}>
+                            <td>{order.id}</td>
+                            <td>{order.price}</td>
+                            <td>{order.date}</td>
+                            <td>
+                                <ul className="list-group">
+                                    {order.bookOrders.map(bookOrder =>
+                                    <li className="list-group-item" key={bookOrder.id}>
+                                        Name: {bookOrder.book.name}, Image: <img src={bookOrder.book.photoLink} width="100"/>, Price: {bookOrder.book.price}, Count: {bookOrder.count}
+                                    </li>
+                                    )}
+                                </ul>
+                            </td>
+                        </tr>
+                        )}
+                    </tbody>
+                </table>
                 <ReactPaginate
                   previousLabel={'previous'}
                   nextLabel={'next'}

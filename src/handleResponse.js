@@ -5,8 +5,9 @@ export function handleResponse(response) {
         const data = text && JSON.parse(text);
         if (!response.ok) {
             if ([401, 403].indexOf(response.status) !== -1) {
+                console.log(response.status);
                 authenticationService.logout();
-                location.reload(true);
+                window.location.reload(true);
             }
 
             return Promise.reject(data);

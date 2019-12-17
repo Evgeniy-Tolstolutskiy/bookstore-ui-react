@@ -9,7 +9,8 @@ class Cart extends React.Component {
 
         this.state = {
             books: [],
-            total: 0
+            total: 0,
+            success: ''
         };
 
         this.loadCart = this.loadCart.bind(this);
@@ -21,28 +22,26 @@ class Cart extends React.Component {
     }
 
     loadCart() {
-        let books = JSON.parse(localStorage.getItem('cart'));
-        books = books ? books : [];
-        let booksTemp = [];
-        let totalTemp = 0;
-        for (let i = 0; i < books.length; i++) {
-            booksTemp.push(books[i]);
-            totalTemp += books[i].price * books[i].count;
+        try {
+            let books = JSON.parse(localStorage.getItem('cart'));
+            let booksTemp = [];
+            let totalTemp = 0;
+            for (let id in books) {
+                booksTemp.push(books[id]);
+                totalTemp += books[id].price * books[id].count;
+            }
+            this.setState({
+                books: booksTemp,
+                total: totalTemp
+            });
+        } catch(error) {
+            console.debug('Cart is not initialized');
         }
-        this.setState({
-            books: booksTemp,
-            total: totalTemp
-        });
     }
 
     remove(id) {
         let books = JSON.parse(localStorage.getItem('cart'));
-        for (let i = 0; i < books.length; i++) {
-            if (books[i].id === id) {
-                books.splice(i, 1);
-                break;
-            }
-        }
+        delete books[id];
         localStorage.setItem('cart', JSON.stringify(books));
         this.loadCart();
     }
@@ -53,13 +52,13 @@ class Cart extends React.Component {
         }
 
         let orderItems = [];
-        for (let i = 0; i < this.state.books.length; i++) {
+        this.state.books.map(book => {
             orderItems.push({
-                book: this.state.books[i],
-                count: this.state.books[i].count
+                book: book,
+                count: book.count
             });
-		    }
-        localStorage.setItem('cart', '[]');
+        });
+        localStorage.setItem('cart', '{}');
         const requestOptions = {
             method: 'POST',
             headers: { Authorization: authHeader().Authorization, 'Content-Type': 'application/json' },
@@ -72,14 +71,16 @@ class Cart extends React.Component {
         this.loadCart();
         return fetch(`${process.env.REACT_APP_API_URL}/orders`, requestOptions)
             .then(handleResponse)
-            .then(response => {
-
+            .then(() => {
+                this.setState({
+                    success: 'Order has been done successfully!'
+                });
             });
     }
 
     render() {
         return (
-            <div id="content" className="container">
+            <div>
                 <table className="table">
                     <thead>
                         <tr>
@@ -116,6 +117,7 @@ class Cart extends React.Component {
                     </tbody>
                 </table>
                 <button className="btn btn-success" onClick={this.makeOrder}>Make order</button>
+                <div className="text-success">{this.state.success}</div>
             </div>
         );
     }

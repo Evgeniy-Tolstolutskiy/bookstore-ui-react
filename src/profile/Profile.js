@@ -8,16 +8,16 @@ import Modal from "react-modal";
 import {logout} from "../logout";
 
 const customStyles = {
-    content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
     }
 };
-Modal.setAppElement('#root')
+Modal.setAppElement('#root');
 
 class Profile extends React.Component {
     constructor(props) {
@@ -40,7 +40,6 @@ class Profile extends React.Component {
 
         this.removeCurrentUser = this.removeCurrentUser.bind(this);
         this.loadUser = this.loadUser.bind(this);
-        this.validateField = this.validateField.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -91,7 +90,7 @@ class Profile extends React.Component {
                 fieldValidationErrors.username = value !== '' ? '' : 'Username is required';
                 break;
             case 'password':
-                if (value.length > 0 && value.length < 6) {
+                if (value.length < 6) {
                     fieldValidationErrors.password = 'Password is too short';
                 } else if (!value) {
                     fieldValidationErrors.password = 'Password is required';
@@ -195,7 +194,7 @@ class Profile extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container" style={{width: '50%'}}>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>

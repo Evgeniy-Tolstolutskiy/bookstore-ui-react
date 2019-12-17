@@ -12,6 +12,7 @@ import decode from 'jwt-decode';
 class Books extends React.Component {
     constructor(props) {
         super(props);
+        console.log('constructor');
 
         this.state = {
             books: [],
@@ -23,6 +24,7 @@ class Books extends React.Component {
         this.loadAllBooks = this.loadAllBooks.bind(this);
         this.addToCart = this.addToCart.bind(this);
         this.pageChanged = this.pageChanged.bind(this);
+        this.getBookCount = this.getBookCount.bind(this);
     }
 
     componentDidMount() {
@@ -47,8 +49,21 @@ class Books extends React.Component {
 
     addToCart(book) {
         if (book.count > 0) {
-            book.count -= 1;
             addToCart(book);
+            this.setState({});
+        }
+    }
+
+    getBookCount(book) {
+        try {
+            let books = JSON.parse(localStorage.getItem('cart'));
+            if (books[book.id]) {
+                return book.count - books[book.id].count;
+            }
+            return book.count;
+        } catch(error) {
+            console.debug('Cart is not initialized');
+            return book.count;
         }
     }
 
@@ -68,7 +83,7 @@ class Books extends React.Component {
                             <th>Photo</th>
                             <th>Price</th>
                             {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <th>Visible</th>}
-                            <th>Add to cart</th>
+                            {this.tokenPayload.authorities[0] === 'ROLE_USER' && <th>Add to cart</th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -80,7 +95,7 @@ class Books extends React.Component {
                                 </td>
                                 <td>{book.price}</td>
                                 {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td>{book.visible ? 'Visible' : 'Not visible'}</td>}
-                                <td><a disabled={book.count <= 0} onClick={() => this.addToCart(book)} className="btn btn-info">+</a></td>
+                                {this.tokenPayload.authorities[0] === 'ROLE_USER' && <td><input type="button" disabled={this.getBookCount(book) === 0} onClick={() => this.addToCart(book)} className="btn btn-info" value="+"/></td>}
                                 {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td><Link key={book.id} to={`/book/${book.id}`}>Edit</Link></td>}
                                 {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' &&
                                     <td><a onClick={() => {
