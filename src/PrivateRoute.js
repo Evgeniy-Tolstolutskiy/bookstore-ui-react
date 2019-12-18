@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { authenticationService } from './authenticationService';
 
-export const PrivateRoute = ({ component: Component, ...rest, context }) => (
+export const PrivateRoute = ({ component: Component, context, ...rest }) => (
     <Route {...rest} render={props => {
         const currentUser = authenticationService.currentUserValue;
         if (!currentUser) {

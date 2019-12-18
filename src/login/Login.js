@@ -88,7 +88,7 @@ class Login extends React.Component {
                         { this.state.submitted && <div className="text-danger">{this.state.formErrors.password}</div> }
                     </div>
                     <div className="form-group">
-                        <input type="submit" className="btn btn-primary" value="Submit" />
+                        <input type="submit" className="btn btn-primary" value="Login" />
                     </div>
                 </form>
                 <Link to="/registration">Registration</Link>

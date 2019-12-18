@@ -147,7 +147,7 @@ class Book extends React.Component {
                         }).catch(errors => {
                             this.setState({
                                 photoSuccess: '',
-                                photoFailure: errors,
+                                photoFailure: errors[0].code,
                             });
                         });
                 }

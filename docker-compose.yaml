@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: npm run start
+    volumes:
+      - ./dist:/server/dist
+    ports:
+      - 8081:8081
