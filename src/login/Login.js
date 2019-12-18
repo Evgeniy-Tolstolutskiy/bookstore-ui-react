@@ -31,6 +31,9 @@ class Login extends React.Component {
             failure: '',
             submitted: true
         });
+        for (let [key, value] of Object.entries(this.state)) {
+            this.validateField(key, value);
+        }
 
         if (!this.state.formValid) {
             return;
@@ -60,7 +63,7 @@ class Login extends React.Component {
         let fieldValidationErrors = this.state.formErrors;
         switch(fieldName) {
             case 'login':
-                fieldValidationErrors.username = value !== '' ? '' : 'Email is required';
+                fieldValidationErrors.login = value !== '' ? '' : 'Email is required';
                 break;
             case 'password':
                 fieldValidationErrors.password = value !== '' ? '' : 'Password is required';

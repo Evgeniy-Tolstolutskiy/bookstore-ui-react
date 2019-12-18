@@ -12,7 +12,6 @@ import decode from 'jwt-decode';
 class Books extends React.Component {
     constructor(props) {
         super(props);
-        console.log('constructor');
 
         this.state = {
             books: [],
@@ -44,6 +43,13 @@ class Books extends React.Component {
                     totalPages: response.page.totalPages,
                     currentPage: pageNumber
                 });
+            })
+            .catch(response => {
+                if ([401, 403].indexOf(response.status) !== -1) {
+                    console.log(response.status);
+                    authenticationService.logout();
+                    window.location.reload(true);
+                }
             });
     }
 

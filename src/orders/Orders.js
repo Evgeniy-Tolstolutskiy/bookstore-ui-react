@@ -60,13 +60,26 @@ class Orders extends React.Component {
                             <td>{order.price}</td>
                             <td>{order.date}</td>
                             <td>
-                                <ul className="list-group">
-                                    {order.bookOrders.map(bookOrder =>
-                                    <li className="list-group-item" key={bookOrder.id}>
-                                        Name: {bookOrder.book.name}, Image: <img src={bookOrder.book.photoLink} width="100"/>, Price: {bookOrder.book.price}, Count: {bookOrder.count}
-                                    </li>
-                                    )}
-                                </ul>
+                                <table className="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Image</th>
+                                        <th>Price</th>
+                                        <th>Count</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {order.bookOrders.map(bookOrder =>
+                                        <tr key={bookOrder.id}>
+                                            <td>{bookOrder.book.name}</td>
+                                            <td><img src={bookOrder.book.photoLink} width="100"/></td>
+                                            <td>{bookOrder.book.price}</td>
+                                            <td>{bookOrder.count}</td>
+                                        </tr>
+                                        )}
+                                    </tbody>
+                                </table>
                             </td>
                         </tr>
                         )}

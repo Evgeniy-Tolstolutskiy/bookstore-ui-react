@@ -25,14 +25,14 @@ class Cart extends React.Component {
         try {
             let books = JSON.parse(localStorage.getItem('cart'));
             let booksTemp = [];
-            let totalTemp = 0;
+            let total = 0;
             for (let id in books) {
                 booksTemp.push(books[id]);
-                totalTemp += books[id].price * books[id].count;
+                total += books[id].price * books[id].count;
             }
             this.setState({
                 books: booksTemp,
-                total: totalTemp
+                total: total
             });
         } catch(error) {
             console.debug('Cart is not initialized');

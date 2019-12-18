@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "jwt-decode": "latest",
+    "module-alias": "^2.2.2",
     "moment": "^2.24.0",
     "popper.js": "^1.15.0",
     "react": "^16.11.0",
@@ -33,5 +34,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "_moduleAliases": {
+    "@authenticationService": "src/authenticationService",
+    "@browserHistory": "src/history",
+    "@PrivateRoute": "src/PrivateRoute",
+    "@Books": "src/books/Books",
+    "@Cart": "src/cart/Cart",
+    "@Login": "src/login/Login",
+    "@Orders": "src/orders/Orders",
+    "@Profile": "src/profile/Profile",
+    "@Book": "src/book/Book",
+    "@Users": "src/users/Users",
+    "@logout": "src/logout"
   }
 }

@@ -90,10 +90,10 @@ class Profile extends React.Component {
                 fieldValidationErrors.username = value !== '' ? '' : 'Username is required';
                 break;
             case 'password':
-                if (value.length < 6) {
-                    fieldValidationErrors.password = 'Password is too short';
-                } else if (!value) {
+                if (!value) {
                     fieldValidationErrors.password = 'Password is required';
+                } else if (value.length < 6) {
+                    fieldValidationErrors.password = 'Password is too short';
                 } else {
                     fieldValidationErrors.password = '';
                 }
@@ -127,6 +127,9 @@ class Profile extends React.Component {
             failure: '',
             submitted: true
         });
+        for (let [key, value] of Object.entries(this.state)) {
+            this.validateField(key, value);
+        }
 
         if (!this.state.formValid) {
             return;
@@ -195,6 +198,7 @@ class Profile extends React.Component {
     render() {
         return (
             <div className="container" style={{width: '50%'}}>
+                { !this.state.id && <h2>Register</h2> }
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
@@ -230,7 +234,7 @@ class Profile extends React.Component {
                         { this.state.submitted && <div className="text-danger">{this.state.formErrors.gender}</div> }
                     </div>
                     <div className="btn-toolbar">
-                        <input type="submit" value="Update" className="btn btn-primary" />
+                        <input type="submit" value={this.state.id ? 'Update' : 'Register'} className="btn btn-primary" />
                         { this.state.id && <input type="button" value="Delete" className="btn btn-danger" onClick={ () => {this.setState({isModalOpened: true})} } /> }
                         <Modal
                             isOpen={this.state.isModalOpened}
