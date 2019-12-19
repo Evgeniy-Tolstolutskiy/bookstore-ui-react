@@ -18,7 +18,7 @@ class Orders extends React.Component {
     }
 
     componentDidMount() {
-        this.loadAllOrders(0, process.env.REACT_APP_DEFAULT_PAGE_SIZE);
+        this.loadAllOrders(0, process.env.DEFAULT_PAGE_SIZE);
     }
 
     loadAllOrders(pageNumber, size) {
@@ -26,7 +26,7 @@ class Orders extends React.Component {
             method: 'GET',
             headers: authHeader()
         };
-        fetch(`${process.env.REACT_APP_API_URL}/orders/my?page=${pageNumber}&size=${size}`, requestOptions)
+        fetch(`${process.env.API_URL}/orders/my?page=${pageNumber}&size=${size}`, requestOptions)
             .then(handleResponse)
             .then(response => {
                 this.setState({
@@ -37,7 +37,7 @@ class Orders extends React.Component {
     }
 
     pageChanged(data) {
-        this.loadAllOrders(data.selected, process.env.REACT_APP_DEFAULT_PAGE_SIZE);
+        this.loadAllOrders(data.selected, process.env.DEFAULT_PAGE_SIZE);
     }
 
     render() {

@@ -69,7 +69,7 @@ class Cart extends React.Component {
             })
         };
         this.loadCart();
-        return fetch(`${process.env.REACT_APP_API_URL}/orders`, requestOptions)
+        return fetch(`${process.env.API_URL}/orders`, requestOptions)
             .then(handleResponse)
             .then(() => {
                 this.setState({

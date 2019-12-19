@@ -27,7 +27,7 @@ class Books extends React.Component {
     }
 
     componentDidMount() {
-        this.loadAllBooks(0, process.env.REACT_APP_DEFAULT_PAGE_SIZE);
+        this.loadAllBooks(0, process.env.DEFAULT_PAGE_SIZE);
     }
 
     loadAllBooks(pageNumber, size) {
@@ -35,7 +35,7 @@ class Books extends React.Component {
             method: 'GET',
             headers: authHeader()
         };
-        fetch(`${process.env.REACT_APP_API_URL}/books?page=${pageNumber}&size=${size}&sort=id`, requestOptions)
+        fetch(`${process.env.API_URL}/books?page=${pageNumber}&size=${size}&sort=id`, requestOptions)
             .then(handleResponse)
             .then(response => {
                 this.setState({
@@ -74,7 +74,7 @@ class Books extends React.Component {
     }
 
     pageChanged(data) {
-        this.loadAllBooks(data.selected, process.env.REACT_APP_DEFAULT_PAGE_SIZE);
+        this.loadAllBooks(data.selected, process.env.DEFAULT_PAGE_SIZE);
     }
 
     render() {
@@ -89,26 +89,28 @@ class Books extends React.Component {
                             <th>Photo</th>
                             <th>Price</th>
                             {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <th>Visible</th>}
+                            {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <th>Count</th>}
                             {this.tokenPayload.authorities[0] === 'ROLE_USER' && <th>Add to cart</th>}
                         </tr>
                     </thead>
                     <tbody>
-                    {books.map(book =>
-                     <tr key={book.id}>
-                                <td>{book.name}</td>
-                                <td>
-                                    <img src={book.photoLink} width="100"/>
-                                </td>
-                                <td>{book.price}</td>
-                                {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td>{book.visible ? 'Visible' : 'Not visible'}</td>}
-                                {this.tokenPayload.authorities[0] === 'ROLE_USER' && <td><input type="button" disabled={this.getBookCount(book) === 0} onClick={() => this.addToCart(book)} className="btn btn-info" value="+"/></td>}
-                                {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td><Link key={book.id} to={`/book/${book.id}`}>Edit</Link></td>}
-                                {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' &&
-                                    <td><a onClick={() => {
-                                        removeBook(book.id).then(() => this.setState({books: this.state.books.filter((b) => book.id !== b.id)}))
-                                    }}>X</a></td>
-                                }
-                            </tr>
+                        {books.map(book =>
+                        <tr key={book.id}>
+                            <td>{book.name}</td>
+                            <td>
+                                <img src={book.photoLink} width="100"/>
+                            </td>
+                            <td>{book.price}</td>
+                            {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td>{book.visible ? 'Visible' : 'Not visible'}</td>}
+                            {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td>{book.count}</td>}
+                            {this.tokenPayload.authorities[0] === 'ROLE_USER' && <td><input type="button" disabled={this.getBookCount(book) === 0} onClick={() => this.addToCart(book)} className="btn btn-info" value="+"/></td>}
+                            {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' && <td><Link key={book.id} to={`/book/${book.id}`}>Edit</Link></td>}
+                            {this.tokenPayload.authorities[0] === 'ROLE_ADMIN' &&
+                                <td><a onClick={() => {
+                                    removeBook(book.id).then(() => this.setState({books: this.state.books.filter((b) => book.id !== b.id)}))
+                                }}>X</a></td>
+                            }
+                        </tr>
                         )}
                     </tbody>
                 </table>

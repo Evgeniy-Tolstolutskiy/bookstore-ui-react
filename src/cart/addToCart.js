@@ -2,6 +2,9 @@ export function addToCart(book) {
     let books = {};
     try {
         books = JSON.parse(localStorage.getItem('cart'));
+        if (books === null) {
+            books = {};
+        }
     } catch (error) {
         console.debug('Cart is not initialized');
     }

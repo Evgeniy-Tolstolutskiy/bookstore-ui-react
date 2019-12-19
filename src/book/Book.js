@@ -39,7 +39,7 @@ class Book extends React.Component {
             method: 'GET',
             headers: authHeader()
         };
-        fetch(`${process.env.REACT_APP_API_URL}/books/${bookId}`, requestOptions)
+        fetch(`${process.env.API_URL}/books/${bookId}`, requestOptions)
             .then(handleResponse)
             .then(response => {
                 this.setState({
@@ -112,7 +112,7 @@ class Book extends React.Component {
             headers: headers,
             body: JSON.stringify(this.state)
         };
-        fetch(`${process.env.REACT_APP_API_URL}/books`, requestOptions)
+        fetch(`${process.env.API_URL}/books`, requestOptions)
             .then(handleResponse)
             .then((response) => {
                 if (this.state.id) {
@@ -136,7 +136,7 @@ class Book extends React.Component {
                         headers: headers,
                         body: formData
                     };
-                    fetch(`${process.env.REACT_APP_API_URL}/books/${this.state.id}/image`, fileRequestOptions)
+                    fetch(`${process.env.API_URL}/books/${this.state.id}/image`, fileRequestOptions)
                         .then(handleResponse)
                         .then(response => {
                             this.setState({

@@ -1,56 +1,61 @@
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-let apiHost = '';
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const dotenv = require('dotenv');
 
-module.exports = env => {
-    apiHost = process.env.ENDPOINT || 'http://localhost:8090';
-    return {
-        entry: './src/index.js',
-        module: {
-            rules: [
-                {
-                    test: /\.(html)$/,
-                    loader: 'raw-loader'
-                },
-                {
-                    test: /\.css$/,
-                    include: /src|node_modules/,
-                    use: ["to-string-loader", "style-loader", "css-loader"]
-                },
-                {
-                    test: /\.js$/,
-                    use: "babel-loader",
-                    exclude: /node_modules/,
-                },
-            ]
-        },
-        resolve: {
-            extensions: ['.js'],
-            alias: {
-                '@': path.resolve(__dirname, 'src/'),
-            }
-        },
-        plugins: [
-            new HtmlWebpackPlugin({
-                template: './public/index.html',
-                filename: 'index.html',
-                inject: 'body'
-            }),
-            new webpack.DefinePlugin({
-                config: JSON.stringify({
-                    apiUrl: apiHost
-                })
-            })
-        ],
-        optimization: {
-            splitChunks: {
-                chunks: 'all',
+const env = dotenv.config().parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next]);
+    return prev;
+}, {});
+
+module.exports = {
+    entry: "./src/index.js",
+    mode: "development",
+    output: {
+        filename: "./main.js"
+    },
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        compress: true,
+        port: 9000,
+        watchContentBase: true,
+        progress: true
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.m?js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: "babel-loader"
+                }
             },
-            runtimeChunk: true
-        },
-        devServer: {
-            historyApiFallback: true
-        }
-    };
+            {
+                test: /\.css$/,
+                use: [
+                    "style-loader",
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: true
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(ico|png|svg|jpg|gif|ttf|woff2|woff|eot)$/,
+                use: ["file-loader"]
+            }
+        ]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: 'public/index.html',
+            filename: 'index.html',
+            inject: 'body'
+        }),
+        new webpack.DefinePlugin(envKeys)
+    ]
 };

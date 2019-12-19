@@ -17,7 +17,7 @@ function login(username, password) {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    return fetch(`${process.env.REACT_APP_API_URL}/oauth/token?grant_type=password&username=${username}&password=${password}&client_id=bookstore_client&client_secret=bookstore_secret`, requestOptions)
+    return fetch(`${process.env.API_URL}/oauth/token?grant_type=password&username=${username}&password=${password}&client_id=bookstore_client&client_secret=bookstore_secret`, requestOptions)
         .then(handleResponse)
         .then(user => {
             localStorage.setItem('currentUser', JSON.stringify(user));

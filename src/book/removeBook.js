@@ -5,7 +5,7 @@ export function removeBook(id) {
         method: 'DELETE',
         headers: authHeader()
     };
-    return fetch(`${process.env.REACT_APP_API_URL}/books/${id}`, requestOptions);
+    return fetch(`${process.env.API_URL}/books/${id}`, requestOptions);
 }
 
 export default removeBook;

@@ -55,7 +55,7 @@ class Profile extends React.Component {
             method: 'GET',
             headers: authHeader()
         };
-        fetch(`${process.env.REACT_APP_API_URL}/users/me`, requestOptions)
+        fetch(`${process.env.API_URL}/users/me`, requestOptions)
             .then(handleResponse)
             .then(response => {
                 this.setState({
@@ -141,7 +141,7 @@ class Profile extends React.Component {
                 headers: {Authorization: authHeader().Authorization, 'Content-Type': 'application/json'},
                 body: JSON.stringify(this.state)
             };
-            fetch(`${process.env.REACT_APP_API_URL}/users`, requestOptions)
+            fetch(`${process.env.API_URL}/users`, requestOptions)
                 .then(handleResponse)
                 .then(() => {
                     this.setState({
@@ -160,7 +160,7 @@ class Profile extends React.Component {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(this.state)
             };
-            fetch(`${process.env.REACT_APP_API_URL}/users/registration`, requestOptions)
+            fetch(`${process.env.API_URL}/users/registration`, requestOptions)
                 .then(handleResponse)
                 .then(() => {
                     this.setState({
@@ -190,7 +190,7 @@ class Profile extends React.Component {
             method: 'DELETE',
             headers: authHeader()
         };
-        fetch(`${process.env.REACT_APP_API_URL}/users/me`, requestOptions)
+        fetch(`${process.env.API_URL}/users/me`, requestOptions)
             .then(handleResponse)
             .then(() => logout(this.props.context));
     }

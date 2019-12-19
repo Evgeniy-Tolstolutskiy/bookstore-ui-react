@@ -9,10 +9,10 @@ import Cart from './cart/Cart';
 import Login from './login/Login';
 import Orders from './orders/Orders';
 import Profile from './profile/Profile';
-import Book from '@Book';
-import Users from '@Users';
+import Book from './book/Book';
+import Users from './users/Users';
 import decode from 'jwt-decode';
-import {logout} from "@logout";
+import {logout} from "./logout";
 
 class App extends React.Component {
   constructor(props) {

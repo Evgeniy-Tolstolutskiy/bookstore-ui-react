@@ -20,7 +20,7 @@ class Users extends React.Component {
     }
 
     componentDidMount() {
-        this.loadAllUsers(0, process.env.REACT_APP_DEFAULT_PAGE_SIZE);
+        this.loadAllUsers(0, process.env.DEFAULT_PAGE_SIZE);
     }
 
     loadAllUsers(pageNumber, size) {
@@ -28,7 +28,7 @@ class Users extends React.Component {
             method: 'GET',
             headers: authHeader()
         };
-        fetch(`${process.env.REACT_APP_API_URL}/usersRepository?page=${pageNumber}&size=${size}&sort=id`, requestOptions)
+        fetch(`${process.env.API_URL}/usersRepository?page=${pageNumber}&size=${size}&sort=id`, requestOptions)
             .then(handleResponse)
             .then(response => {
                 this.setState({
@@ -40,7 +40,7 @@ class Users extends React.Component {
     }
 
     pageChanged(data) {
-        this.loadAllUsers(data.selected, process.env.REACT_APP_DEFAULT_PAGE_SIZE);
+        this.loadAllUsers(data.selected, process.env.DEFAULT_PAGE_SIZE);
     }
 
     removeUser(id) {
@@ -48,10 +48,10 @@ class Users extends React.Component {
             method: 'DELETE',
             headers: authHeader()
         };
-        fetch(`${process.env.REACT_APP_API_URL}/usersRepository/${id}`, requestOptions)
+        fetch(`${process.env.API_URL}/usersRepository/${id}`, requestOptions)
             .then(handleResponse)
             .then(() => this.setState({
-                books: this.state.users.filter((u) => id !== u.id)
+                users: this.state.users.filter((u) => id !== u.id)
             }));
     }
 
