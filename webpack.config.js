@@ -72,7 +72,7 @@ module.exports = (env) => {
                 authenticationService: path.resolve(__dirname, 'src/authenticationService'),
                 authHeader: path.resolve(__dirname, 'src/authHeader'),
                 handleResponse: path.resolve(__dirname, 'src/handleResponse'),
-                browserHistory: path.resolve(__dirname, 'src/history'),
+                hashHistory: path.resolve(__dirname, 'src/history'),
                 logout: path.resolve(__dirname, 'src/logout'),
                 PrivateRoute: path.resolve(__dirname, 'src/PrivateRoute'),
             }

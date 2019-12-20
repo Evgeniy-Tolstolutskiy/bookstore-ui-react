@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route, Link } from 'react-router-dom';
 
-import history from 'browserHistory';
+import history from 'hashHistory';
 import authenticationService from 'authenticationService';
 import PrivateRoute from 'PrivateRoute';
 import Books from 'Books';
