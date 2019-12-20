@@ -1,11 +1,10 @@
 import React from 'react';
 import moment from 'moment';
-
-import authenticationService from '../authenticationService';
-import handleResponse from '../handleResponse';
-import authHeader from '../authHeader';
+import authenticationService from 'authenticationService';
+import handleResponse from 'handleResponse';
+import authHeader from 'authHeader';
 import Modal from "react-modal";
-import {logout} from "../logout";
+import {logout} from "logout";
 
 const customStyles = {
     content: {

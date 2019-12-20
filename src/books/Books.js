@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-
-import handleResponse from '../handleResponse';
-import authHeader from '../authHeader';
-import addToCart from '../cart/addToCart';
-import removeBook from "../book/removeBook";
+import handleResponse from 'handleResponse';
+import authHeader from 'authHeader';
+import addToCart from 'addToCart';
+import removeBook from "removeBook";
 import { Link } from "react-router-dom";
-import authenticationService from "../authenticationService";
+import authenticationService from "authenticationService";
 import decode from 'jwt-decode';
 
 class Books extends React.Component {

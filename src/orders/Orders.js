@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-
-import handleResponse from '../handleResponse';
-import authHeader from '../authHeader';
+import handleResponse from 'handleResponse';
+import authHeader from 'authHeader';
 
 class Orders extends React.Component {
     constructor(props) {

@@ -1,18 +1,18 @@
 import React from 'react';
 import { Router, Route, Link } from 'react-router-dom';
 
-import history from './history';
-import authenticationService from './authenticationService';
-import PrivateRoute from './PrivateRoute';
-import Books from './books/Books';
-import Cart from './cart/Cart';
-import Login from './login/Login';
-import Orders from './orders/Orders';
-import Profile from './profile/Profile';
-import Book from './book/Book';
-import Users from './users/Users';
+import history from 'browserHistory';
+import authenticationService from 'authenticationService';
+import PrivateRoute from 'PrivateRoute';
+import Books from 'Books';
+import Cart from 'Cart';
+import Login from 'Login';
+import Orders from 'Orders';
+import Profile from 'Profile';
+import Book from 'Book';
+import Users from 'Users';
 import decode from 'jwt-decode';
-import {logout} from "./logout";
+import {logout} from "logout";
 
 class App extends React.Component {
   constructor(props) {

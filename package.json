@@ -40,8 +40,8 @@
     ]
   },
   "scripts": {
-    "dev": "webpack-dev-server --env.API_URL=http://localhost:8090 --env.DEFAULT_PAGE_SIZE=5",
-    "start": "webpack"
+    "build": "webpack --env.API_URL=http://localhost:8090 --env.DEFAULT_PAGE_SIZE=5",
+    "start": "webpack-dev-server --env.API_URL=http://localhost:8090 --env.DEFAULT_PAGE_SIZE=5"
   },
   "browserslist": {
     "production": [

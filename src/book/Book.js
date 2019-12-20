@@ -1,8 +1,7 @@
 import React from 'react';
-
-import authenticationService from '../authenticationService';
-import handleResponse from '../handleResponse';
-import authHeader from '../authHeader';
+import authenticationService from 'authenticationService';
+import handleResponse from 'handleResponse';
+import authHeader from 'authHeader';
 
 class Book extends React.Component {
     constructor(props) {

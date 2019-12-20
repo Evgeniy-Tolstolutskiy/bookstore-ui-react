@@ -2,20 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ea7f337-cc33-4dee-b473-11b9e91c61f5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/authenticationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/authenticationService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/book/Book.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/book/Book.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/book/removeBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/book/removeBook.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/books/Books.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/books/Books.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cart/Cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/cart/Cart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cart/addToCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/cart/addToCart.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/login/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/orders/Orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/orders/Orders.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/profile/Profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/users/Users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/Users.js" afterDir="false" />
@@ -116,7 +113,7 @@
       <workItem from="1576522255102" duration="14666000" />
       <workItem from="1576609722395" duration="6281000" />
       <workItem from="1576776380184" duration="8496000" />
-      <workItem from="1576786468197" duration="2335000" />
+      <workItem from="1576786468197" duration="7241000" />
     </task>
     <servers />
   </component>

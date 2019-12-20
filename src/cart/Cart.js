@@ -1,7 +1,6 @@
 import React from 'react';
-
-import handleResponse from '../handleResponse';
-import authHeader from '../authHeader';
+import handleResponse from 'handleResponse';
+import authHeader from 'authHeader';
 
 class Cart extends React.Component {
     constructor(props) {

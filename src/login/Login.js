@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import authenticationService from '../authenticationService';
+import authenticationService from 'authenticationService';
 
 class Login extends React.Component {
     constructor(props) {

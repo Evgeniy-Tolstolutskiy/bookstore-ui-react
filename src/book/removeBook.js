@@ -1,4 +1,4 @@
-import authHeader from "../authHeader";
+import authHeader from "authHeader";
 
 export function removeBook(id) {
     const requestOptions = {
