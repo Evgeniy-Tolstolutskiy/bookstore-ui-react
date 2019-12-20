@@ -45,7 +45,7 @@ class App extends React.Component {
           <Router history={history}>
               {currentUser &&
                   <header>
-                      <h2>Hello {username}</h2>
+                      <h2 className="helloMessage">Hello {username}</h2>
                       <nav className="navbar navbar-expand-md">
                           <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
                               <ul className="navbar-nav mr-auto">
