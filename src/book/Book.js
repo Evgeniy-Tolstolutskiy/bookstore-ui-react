@@ -69,6 +69,8 @@ class Book extends React.Component {
                     fieldValidationErrors.price = 'Price must be greater or equal to 0';
                 } else if (!value) {
                     fieldValidationErrors.price = 'Price is required';
+                } else if (isNaN(parseFloat(value))) {
+                    fieldValidationErrors.price = 'Price must be a number';
                 } else {
                     fieldValidationErrors.price = '';
                 }
@@ -97,6 +99,9 @@ class Book extends React.Component {
             failure: '',
             submitted: true
         });
+        for (let [key, value] of Object.entries(this.state)) {
+            this.validateField(key, value);
+        }
 
         if (!this.state.formValid) {
             return;

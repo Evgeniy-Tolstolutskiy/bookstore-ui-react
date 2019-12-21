@@ -111,7 +111,7 @@ class Cart extends React.Component {
                       )}
                       <tr>
                           <td colSpan="6" align="right">Total</td>
-                          <td>{this.state.total}</td>
+                          <td>{Number(this.state.total).toFixed(2)}</td>
                       </tr>
                     </tbody>
                 </table>
