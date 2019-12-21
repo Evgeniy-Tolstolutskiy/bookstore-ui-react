@@ -63,7 +63,7 @@ class Cart extends React.Component {
             headers: { Authorization: authHeader().Authorization, 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 bookOrders: orderItems,
-                price: this.state.total,
+                price: Number(this.state.total).toFixed(2),
                 books: []
             })
         };
